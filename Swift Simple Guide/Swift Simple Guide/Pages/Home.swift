@@ -10,7 +10,7 @@ import SwiftUI
 struct Home: View {
     @State var index = 0
     var body: some View{
-        VStack( spacing: 0, content: {
+        VStack(content: {
             HStack( spacing: 20, content: {
                 Text("Gado Resto")
                     .fontWeight(.bold)
@@ -36,9 +36,13 @@ struct Home: View {
             .padding(.top, UIApplication.shared.windows.first? .safeAreaInsets.top)
             .background(Color("primary"))
             
+            if(self.index == 4){
+                Menu()
+            }
             Spacer()
             TabBar(index:self.$index)
         })
+        .background(Color.black.opacity(0.05).edgesIgnoringSafeArea(.top))
         .edgesIgnoringSafeArea(.top)
     }
 }

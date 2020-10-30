@@ -10,7 +10,7 @@ import SwiftUI
 struct TabBar: View {
     @Binding var index : Int
     var body: some View {
-        HStack( spacing: 0, content: {
+        HStack(content: {
             Button(action: {
                 self.index = 0
             }, label: {
@@ -35,15 +35,15 @@ struct TabBar: View {
             Button(action: {
                 self.index = 2
             }, label: {
-                Image(systemName: "cart.fill")
+                Image(systemName: "plus.circle.fill")
                     .font(.title)
                     .foregroundColor(self.index == 2 ?  Color("primary") : Color.black.opacity(0.3))
                     .padding()
                     .background(Color.white)
                     .clipShape(Circle())
-                    .shadow(radius: 4 )
+                    .shadow(radius: 5 )
                 
-            }).offset(y:-20)
+            }).offset(y:-35)
             
             Spacer(minLength: 0)
             
@@ -67,11 +67,31 @@ struct TabBar: View {
             })
             
         })
-        .padding(.horizontal, 25)
-        .padding(.top, 10)
+        .padding(.horizontal, 35)
+        .padding(.top, 35)
+        .background(Color.white)
+        .clipShape(BackgrounShape())
         .padding(
             .bottom,
             UIApplication.shared.windows.first? .safeAreaInsets.bottom == 0 ? 10:0)
     }
 }
 
+struct BackgrounShape: Shape {
+    func path(in rect: CGRect) -> Path {
+        return Path{ path in
+            path.move(to: CGPoint(x:0, y:35))
+            path.addLine(to: CGPoint(x: 0, y: rect.height))
+            path.addLine(to: CGPoint(x:rect.width, y:rect.height))
+            path.addLine(to: CGPoint(x: rect.width, y: 35))
+            
+            path.addArc(center: CGPoint(x: (rect.width/2) + 0, y: 35), radius: 35, startAngle: .zero, endAngle: .init(degrees: 180), clockwise: true)
+        }
+    }
+}
+
+struct TabBar_Previews: PreviewProvider {
+    static var previews: some View {
+        TabBar(index: .constant(0))
+    }
+}
